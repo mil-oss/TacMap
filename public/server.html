@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--
+/* 
+ * Copyright (C) 2015 Major James Neushul, USMC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<html lang="en">
+    <head>
+        <title>TAC MAP SERVER</title>
+        <link rel="stylesheet" href="Cesium/Widgets/widgets.css" />
+        <link rel="stylesheet" href="css/plimap.css" />
+    </head>
+    <body>
+        <div id="infoCol" class="noselect" data-ng-app="TacMapServer">
+            <div data-ng-controller="storeCtl as sctl">
+                <div class="scenetitle">{{selscene.value}}</div>
+                <div class="accordion__container" data-ng-controller="menuCtrl">
+                    <div class="accordion__tab">
+                        <div data-ng-model="tabone" class="accordion__tab-title"
+                             data-ng-click="openTab('tab one')">Scenarios</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab one')">
+                            <select data-ng-options="scene.value for scene in sctl.scenelist | orderBy: 'id'" data-ng-change="sctl.loadScenario(selscene)"
+                                    data-ng-model="selscene"></select>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab two')">Plan Scenario</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab two')">
+                            <div class="bsect">
+                                <div class="label">Scenarios:</div>
+                                <button class="smbtn" data-ng-mouseover="leaveOpenTab('tab one')"
+                                        data-ng-click="sctl.deleteScenario(selscene)">Delete</button>
+                                <button class="smbtn" data-ng-mouseover="leaveOpenTab('tab one')"
+                                        data-ng-click="sctl.saveScenario(selscene)">Save</button>
+                                <button class="smbtn" data-ng-click="sctl.importScenario()"
+                                        >Import</button>
+                                <button class="smbtn" data-ng-click="sctl.exportScenario()"
+                                        >Export</button>
+                            </div>
+                            <div class="msect"><span class="txtbtn" data-ng-click="sctl.clearDb()">Reset Local Cache Database</span></div>
+                            <div class="sect">
+                                <input data-ng-model="sctl.editlocchecked" data-ng-false-value="0"
+                                       type="checkbox" data-ng-change="sctl.editchecked = 0"/>
+                                <span>Set Locations</span>
+                            </div>
+                            <div class="msect" data-ng-show="sctl.editlocchecked">Right Click to Set Location</div>
+                            <div class="sect">
+                                <input data-ng-model="sctl.editchecked" data-ng-false-value="0"
+                                       type="checkbox" data-ng-change="sctl.editlocchecked = 0"/>
+                                <span>Edit Waypoints</span>
+                                <span>
+                                    <button class="smbtn" data-ng-show="sctl.editchecked"
+                                            data-ng-click="sctl.removeLastWp()">del</button>
+                                    <button class="smbtn" data-ng-show="sctl.editchecked"
+                                            data-ng-click="sctl.removeAllWp()">del all</button>
+                                </span>
+                            </div>
+                            <div class="msect" data-ng-show="sctl.editchecked">Right Click to Set Waypoints</div>
+                            <div class="sect" data-ng-show="sctl.editchecked">
+                                <span>Speed:</span>
+                                <select data-ng-model="sctl.speedsel"
+                                        data-ng-options="speed as speed._type+' ('+speed._value+' '+speed._units+')' for speed in sctl.speeds"
+                                        ></select>
+                            </div>
+                            <div class="filelist" data-ng-show="sctl.import" data-ng-click="sctl.import = false">
+                                <div data-ng-repeat="f in sctl.files">
+                                    <div class="filelisting">
+                                        <span data-ng-click="sctl.getFile(f)">{{f.scenario}}</span>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab three')">Run
+                            Scenario</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab three')" data-ng-controller="messageCtl as mctl">
+                            <div class="bsect">
+                                <button class="smbtn" data-ng-class="{selected : mctl.running}" data-ng-click="mctl.runScenario()">RUN</button>
+                                <button class="smbtn" data-ng-click="mctl.pauseScenario()">PAUSE</button>
+                                <button class="smbtn" data-ng-click="mctl.resetScenario()">RESET</button>
+                                <button class="smbtn" data-ng-click="">REPT</button>
+                            </div>
+                            <div class="bsect">
+                                <span>Timer: {{mctl.time}}s</span>
+                                <span class="wpchkbx">Show Waypoints<input data-ng-model="sctl.showWP" data-ng-false-value="0" type="checkbox" data-ng-change="sctl.toggleWaypoints()"/></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab four')"
+                             >NETWORKS</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab four')">
+                            <div class="units">
+                                <div data-ng-repeat="n in sctl.networks">
+                                    <div class="unitlisting" data-ng-model="netselected"
+                                         data-ng-click="sctl.selectNetwork(n)"
+                                         data-ng-class="{selected : sctl.netSelected(n)}">
+                                        <img src="" data-ng-src="{{n._icon}}"/>
+                                        <div class="unitlabel">{{n._name}}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab five')"
+                             >UNITS</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab five')">
+                            <div class="units">
+                                <div data-ng-repeat="u in sctl.entities">
+                                    <div class="unitlisting" data-ng-model="sctl.unitselected"
+                                         data-ng-show="sctl.showUnit(u)"
+                                         data-ng-click="sctl.selectUnit(u, true)"
+                                         data-ng-class="{selected : sctl.unitselected._id === u._id}">
+                                        <img src="" data-ng-src="{{u._icon}}" />
+                                        <div class="unitlabel">{{u._name}}</div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab six')"
+                             >MESSAGE LOG</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab six')">
+                            <div class="units" data-ng-controller="messageCtl as msgctl">
+                                <div data-ng-repeat="m in msgctl.messages">
+                                    <div class="msglisting" data-ng-model="msgctl.msg">
+                                        <span>{{m.text}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cesiumContainer"></div>
+        <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
+        <script src='/socket.io/socket.io.js'></script>
+        <script src="js/lib/Cesium/Cesium.js"></script>
+        <script src="js/lib/xml2json.min.js"></script>
+        <script src="js/lib/angular/angular.min.js"></script>
+        <script src="js/lib/compression/lz-string-1.3.3-min.js"></script>
+        <script src="js/lib/compression/base64-string-v1.1.0.js"></script>
+        <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
+        <script src="js/xslUtil.js"></script>
+        <script src="js/tacmapServer.js"></script>
+    </body>
+</html>

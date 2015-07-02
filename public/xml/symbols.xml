@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Symbols>
+    <Symbol type="REGT HQ" sic="10131000151211950000" sym="SFGPUCI---AG" path="img/10131000151211950000.png"/>
+    <Symbol type="BN HQ" sic="10131000161211950000" sym="SFGPUCI---AF" path="img/10131000161211950000.png"/>
+    <Symbol type="CO HQ" sic="10131000151211950000" sym="SFGPUCI---AE" path="img/10131000151211950000.png"/>
+    <Symbol type="PLT HQ" sic="10131000141211950000" sym="SFGPUCI---AD" path="img/10131000141211950000.png"/>
+    <Symbol type="PLT" sic="10131000141211000000" sym="SFGPUCI----D" path="img/10131000141211000000.png"/>
+    <Symbol type="SQD_MOT" sic="10131000121211040000" sym="SFGPUCIM---B" path="img/10131000121211040000.png"/>
+    <Symbol type="SQD_FM" sic="10131000121211000000" sym="SFGPUCI----B" path="img/10131000121211000000.png"/>
+    <Symbol type="FT" sic="10131000111211000000" sym="SFGPUCI----A" path="img/10131000111211000000.png"/>
+    <Symbol type="Osprey" sic="10130100001102000802" sym="SFAPMHUH----" path="img/10130100001102000802.png"/>
+    <Symbol type="Drone" sic="10130100001103000000" sym="SFAPMFQ-----" path="img/10130100001103000000.png"/>
+    <Symbol type="Rescue" sic="10131000001900000000" sym="SFAPMHUH----" path="img/10131000001900000000.png"/>
+    <Symbol type="MEU_ARG" sic="10133000001100000002" sym="SFSPCA------" path="img/10133000001100000002.png"/>
+    <Symbol type="OP" sic="10131000101212000000" sym="SFGPUCI----A" path="img/10131000101212000000.png"/>
+    <Symbol type="AIR" sic="10130100000000000000" sym="SFAP--------" path="img/10130100000000000000.png"/>
+    <Symbol type="GROUND" sic="10131000000000000000" sym="SFAP--------" path="img/10131000000000000000.png"/>
+</Symbols>

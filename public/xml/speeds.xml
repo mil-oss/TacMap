@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Speeds>
+    <Speed type="Dismount" value="1" units="m/s"/>
+    <Speed type="Vehicle" value="15" units="m/s"/>
+    <Speed type="Helo" value="100" units="m/s"/>
+    <Speed type="Jet" value="250" units="m/s"/>
+    <Speed type="Ship" value="12" units="m/s"/>
+</Speeds>

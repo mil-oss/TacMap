@@ -1,0 +1,251 @@
+
+/* 
+ * Copyright (C) 2015 Major James Neushul, USMC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+html{
+    height:100%;
+}
+body{
+    padding:0;
+    margin:0;
+    overflow:hidden;
+    height:100%;
+    background-color:black;
+}
+#cesiumContainer{
+    position:absolute;
+    left:180px;
+    height:100%;
+    width:86%;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    font-family:sans-serif;
+}
+#infoCol{
+    position:absolute;
+    left:0;
+    top:0;
+    height:100%;
+    width:180px;
+    margin:2px;
+}
+.sect{
+    width:100%;
+    margin-top:5px;
+    padding-top:5px;
+    border-top:thin solid black;
+    font-size:10px;
+}
+.rptlist{
+    height:300px;
+    overflow-y: auto;
+}
+.rptlsting{
+    font-size:12px; 
+    font-weight: bold;
+    width:98%;
+    height:50px;
+    border:thin solid black;
+    text-align:center;
+    margin-top:5px; 
+}
+.rptunit{
+    text-align:center;
+}
+.rptsel{
+    font-size:12px; 
+    margin-top:3px;
+    width:120px;
+    text-indent: 10px;
+}
+.rptsect{
+    width:100%;
+    margin-top:5px;
+    font-size:10px; 
+}
+.msglisting{
+    font-size:9px; 
+    font-weight: normal;
+}
+.scenetitle{
+    color:yellow;
+    font-weight:bold;
+    font-size:18px;
+}
+select{
+    font-size:12px; 
+    width:100%;
+}
+option{
+    font-size:12px;
+}
+.rptsel{
+    font-size:10px;
+    font-weight: bold;
+}
+.rptsel span{
+    width:50%; 
+}
+.rptsel select{
+    font-size:10px;
+    width:50%; 
+    float:right;
+}
+.msect{
+    margin-top:4px;
+    font-style:italic;
+    text-align:center;
+}
+.label{
+    margin:4px;
+    font-style:italic;
+    text-align:left;
+}
+.bsect{
+    padding-top:5px;
+    border-top:thin solid black;
+    height:20px;
+    width:90%;
+    margin: 0 auto;
+    padding-bottom:15px;
+}
+.bsect input{
+    margin-top:5px;
+}
+.bspc{
+    margin-bottom:5px;
+}
+.topspc{
+    margin-top:5px;
+}
+.smbtn{
+    padding:0;
+    font-size:10px;
+    color:blue;
+    cursor:pointer;
+    margin-left:1px;
+}
+.bottomdiv{
+    position:absolute;
+    bottom:5px;
+    width:160px;
+}
+.txtbtn{
+    color:red;
+    margin-top: 3px;
+    width:160px;
+    text-align:center;
+    cursor:pointer;
+    font-size:10px;
+}
+.status{
+    position:absolute;
+    bottom:25px;
+    width:160px;
+    color:white;
+    text-align:center;
+}
+.btn{
+    padding:0;
+    font-size:10px;
+    color:blue;
+    cursor:pointer;
+    margin-left:25px;
+}
+.hidden{
+    display:none;
+}
+.selected{
+    background:yellow;
+}
+.wpchkbx{
+    margin-left:10px;
+}
+.units{
+    width:154px;
+    margin-right:2px;
+    max-height:400px;
+    overflow-y:auto;
+}
+.unitlisting img{
+    margin-left:3px;
+    margin-right:3px;
+    float:left;
+    height:20px;
+}
+.unitlisting{
+    width:90%;
+    height:20px;
+    cursor:pointer;
+    border:thin solid black;
+    border-radius:2px;
+    padding:2px;
+    box-shadow:2px 2px 2px #888888;
+    margin:2px;
+    text-align:left;
+    font-weight:normal;
+}
+.unitlabel{
+    margin-left:5px;
+    padding-left:5px;
+    padding-top:8px;
+}
+.accordion__container{
+    background:#FFF;
+    border:1px solid #ccc;
+    /* padding: 2px; */
+}
+.accordion__tab{
+    background:#aaa;
+    color:#000;
+    border-bottom:1px solid white;
+    font-size:10px;
+    font-weight:bold;
+}
+.accordion__tab-title{
+    background:#BEDFD5;
+    padding:5px;
+    cursor:pointer;
+}
+.accordion__tab-content{
+    background:#FFF;
+    padding:2px;
+}
+.filelist {
+    width:145px;
+    margin:2px;
+    border:solid black thin;
+    min-height:75px;
+    max-height:150px;
+    overflow-y:auto;
+    cursor:not-allowed;
+}
+.filelisting{
+    padding:3px;
+    cursor:pointer;
+    color:blue;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

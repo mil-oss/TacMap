@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scenario name="Default Scenario">
+        <Polygons>
+                <Polygon id="Default" name="Default" color="BLACK"
+                        locations="55.56575607490174, 12.89036281976739, 
+            55.439008273141525, 12.973755732370883, 
+            55.45449439522046, 13.18242302009085,
+            55.55866188578008, 13.257385493915168,
+            55.64124548570126, 13.234890424171137,
+            55.655730381379335, 13.054736368827603,
+            55.565262172651636, 12.892124454534516"/>
+                <Polygon id="CanACoAO" name="CAN A CO AO" color="BLUE"
+                        locations="55.565636571057176, 12.893657670265927, 
+            55.655473695649036, 13.055128741479646, 
+            55.64225017458774, 13.106019022693065, 
+            55.621026714647655, 13.057798168813187,
+            55.60823747860208, 13.02539081964753,
+            55.58428625019656, 13.007220932944655,
+            55.565142755927326, 13.000973215812111,
+            55.5483535301156, 13.002480137883001,
+            55.54757807132252, 12.965473773646236,
+            55.545537826909374, 12.908671044242523,
+            55.56575607490174, 12.89036281976739"/>
+                <Polygon id="NldDCoAO" name="NLD D CO AO" color="ORANGE"
+                        locations="55.54830500603035, 13.004053222517514,
+        55.550379790635546, 13.060361107818094,
+        55.58326897684857, 13.111228332326474,
+        55.60212162147694, 13.117370811995132,
+        55.59927622674653, 13.133568565412727,
+55.601485491026274, 13.140698660676883,
+55.607122414386154, 13.141323558301583,
+55.619515031242564, 13.159148665016424,
+55.62115217445712, 13.158987567884884,
+55.63235200708722, 13.171375125318976,
+55.64203675946847, 13.147666054864064,
+55.6420135156114, 13.10653229313368,
+55.60775420254313, 13.027183359416693,
+55.58430106577818, 13.00747128068299,
+55.58406753966376, 13.007806737267996,
+55.56512188045701, 13.001220686877584,
+55.54831404886978, 13.003472670682024"
+                />
+        </Polygons>
+        <Entities>
+                <Entity id="NatoHq" name="NATO HQ" icon="img/10131000151211950000.png"
+                        flag="img/NATO_Flag.png" location="55.643494745710036, 13.090305622832632"
+                        network="NATO" report_to="NATO"/>
+                <Entity id="MeuArg" name="MEU ARG" icon="img/10133000001100000002.png"
+                        location="55.41871512127549, 12.54926405744234" network="USA" report_to="USA"
+                        flag="img/USA_Flag.png"/>
+                <Entity id="Osprey1" name="Rescue 1" icon="img/10130100001102000802.png"
+                        location="55.41871512127549, 12.54926405744234" network="USA" report_to="USA"/>
+                <Entity id="Osprey2" name="Rescue 2" icon="img/10130100001102000802.png"
+                        location="55.41871512127549, 12.54926405744234" network="USA" report_to="USA"/>
+                <Entity id="Pilot" name="HVI" icon="img/10131000001900000000.png"
+                        location=" 55.608586202081966, 13.121102792912808" network="USA"
+                        report_to="USA"/>
+                <Entity id="CanACoHq" name="CAN A CO HQ" icon="img/10131000151211950000.png"
+                        location="55.609874184156006, 12.988018898389175" network="CAN"
+                        report_to="NatoHq" flag="img/CAN_Flag.png"/>
+                <Entity id="CanA-1-1" name="CAN A 1PLT 1SQ" icon="img/10131000121211000000.png"
+                        location="55.60537380777781, 13.015474069801217" network="CAN"
+                        report_to="CanACoHq"/>
+                <Entity id="CanA-1-2" name="CAN A 1PLT 2SQ" icon="img/10131000121211040000.png"
+                        location="55.56547552122973, 12.901308492644409" network="CAN"
+                        report_to="CanACoHq"/>
+                <Entity id="CanA-Op" name="CAN A CO OP" icon="img/10131000101212000000.png"
+                        location="55.60087295941101, 12.994523163425265" network="CAN"
+                        report_to="CanACoHq"/>
+                <Entity id="NldDCoHq" name="NLD D CO HQ" icon="img/10131000151211950000.png"
+                        location="55.57152219437396, 13.08665056190492" network="NLD"
+                        report_to="NatoHq" flag="img/NLD_Flag.png"/>
+                <Entity id="NldD-1-1" name="NLD D 1PLT 1SQ" icon="img/10131000121211040000.png"
+                        location="55.63091233648055, 13.1383834177924" network="NLD"
+                        report_to="NldDCoHq"/>
+                <Entity id="NldD-1-2" name="NLD D 1PLT 2SQ" icon="img/10131000121211000000.png"
+                        location="55.689525764833874, 13.162332258626693" network="NLD"
+                        report_to="NldDCoHq"/>
+                <Entity id="NldD-Op" name="NLD D CO OP" icon="img/10131000101212000000.png"
+                        location="55.57479364961776, 13.095548457956438" network="NLD"
+                        report_to="NldDCoHq"/>
+        </Entities>
+        <Speeds>
+                <Speed type="Dismount" value="1" units="m/s"/>
+                <Speed type="Vehicle" value="15" units="m/s"/>
+                <Speed type="Helo" value="100" units="m/s"/>
+                <Speed type="Jet" value="250" units="m/s"/>
+                <Speed type="Ship" value="12" units="m/s"/>
+        </Speeds>
+        <Symbols>
+                <Symbol type="REGT HQ" sic="10131000151211950000"
+                        path="img/10131000151211950000.png"/>
+                <Symbol type="BN HQ" sic="10131000161211950000" path="img/10131000161211950000.png"/>
+                <Symbol type="CO HQ" sic="10131000151211950000" path="img/10131000151211950000.png"/>
+                <Symbol type="PLT HQ" sic="10131000141211950000" path="img/10131000141211950000.png"/>
+                <Symbol type="PLT" sic="10131000141211000000" path="img/10131000141211000000.png"/>
+                <Symbol type="SQD_MOT" sic="10131000121211040000"
+                        path="img/10131000121211040000.png"/>
+                <Symbol type="SQD_FM" sic="10131000121211000000" path="img/10131000121211000000.png"/>
+                <Symbol type="FT" sic="10131000111211000000" path="img/10131000111211000000.png"/>
+                <Symbol type="Osprey" sic="10130100001102000802" path="img/10130100001102000802.png"/>
+                <Symbol type="Drone" sic="10130100001103000000" path="img/10130100001103000000.png"/>
+                <Symbol type="Rescue" sic="10131000001900000000" path="img/10131000001900000000.png"/>
+                <Symbol type="MEU_ARG" sic="10133000001100000002"
+                        path="img/10133000001100000002.png"/>
+                <Symbol type="OP" sic="10131000101212000000" path="img/10131000101212000000.png"/>
+        </Symbols>
+</Scenario>

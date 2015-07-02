@@ -1,0 +1,16 @@
+[{
+        "id": 0,
+        "name": "default.json",
+        "scenario": "Default Scenario",
+        "url": "/json/default.json"
+    }, {
+        "id": 1,
+        "scenario": "Bydgoszcz",
+        "name": "Bydgoszcz.json",
+        "url": "/json/Bydgoszcz.json"
+    }, {
+        "id": 3,
+        "scenario": "Malmo",
+        "name": "Malmo.json",
+        "url": "/json/Malmo.json"
+    }]

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+/* 
+ * Copyright (C) 2015 Major James Neushul, USMC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<html lang="en">
+    <head>
+        <title>TACMAP UNIT</title>
+        <link rel="stylesheet" href="Cesium/Widgets/widgets.css" />
+        <link rel="stylesheet" href="css/plimap.css" />
+    </head>
+    <body>
+        <div id="infoCol" data-ng-app="TacMapUnit">
+            <div data-ng-controller="viewCtl as vwctl">
+                <div class="scenetitle">{{selscene.value}}</div>
+                <div class="accordion__container" data-ng-controller="menuCtrl">
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab one')"
+                             >NETWORKS</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab one')">
+                            <div class="units">
+                                <div data-ng-repeat="n in vwctl.networks">
+                                    <div class="unitlisting" data-ng-model="netselected"
+                                         data-ng-click="vwctl.selectNetwork(n)"
+                                         data-ng-class="{selected : vwctl.netSelected(n)}">
+                                        <img src="" data-ng-src="{{n._icon}}"/>
+                                        <div class="unitlabel">{{n._name}}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab two')"
+                             >UNITS</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab two')">
+                            <div class="units">
+                                <div data-ng-repeat="u in vwctl.entities">
+                                    <div class="unitlisting" data-ng-model="vwctl.unitselected"
+                                         data-ng-show="vwctl.showUnit(u)"
+                                         data-ng-click="vwctl.selectUnit(u, true)"
+                                         data-ng-class="{selected : vwctl.unitselected._id === u._id}">
+                                        <img src="" data-ng-src="{{u._icon}}" />
+                                        <div class="unitlabel">{{u._name}}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion__tab">
+                        <div class="accordion__tab-title" data-ng-click="openTab('tab three')"
+                             >MESSAGE LOG</div>
+                        <div class="accordion__tab-content" data-ng-show="isOpenTab('tab three')">
+                            <div class="units" data-ng-controller="ClientMesssageCtl as msgctl">
+                                <div data-ng-repeat="m in msgctl.messages">
+                                    <div class="msglisting" data-ng-model="msgctl.msg">
+                                        <span>{{m.text}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cesiumContainer"></div>
+        <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
+        <script src='/socket.io/socket.io.js'></script>
+        <script src="js/lib/Cesium/Cesium.js"></script>
+        <script src="js/lib/xml2json.min.js"></script>
+        <script src="js/lib/angular/angular.min.js"></script>
+        <script src="js/lib/compression/lz-string-1.3.3-min.js"></script>
+        <script src="js/lib/compression/base64-string-v1.1.0.js"></script>
+        <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
+        <script src="js/tacmapUnit.js"></script>
+    </body>
+</html>
