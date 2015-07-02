@@ -6,8 +6,8 @@ TacMap is a browser based track generation and communication tool which allows t
 * This project was developed to generate sample tracks for use in MIL STD messaging testing
 * All messages are generated, consumed and stored using Javascript in browsers.
 * Data persistence is achieved using HTML5 IndexedDb - which allows disconnected functionality after initialization.
-* Ground truth simulation is achieve using planned tracks which are interpreted as periodic position reports and communicated as JSON objects
-* JSON Objects can be converted into MIL STD message XML formats and converted to and from other formats using SAXON CE XSLT in the browser.  This functionality was demonstrated with NATO MTF FFI messages at CWIX 2015 disseminated using the NATO SIP3 SOAP based protocol..
+* Ground truth simulation is achieved using planned tracks which are interpreted as periodic position reports and communicated as JSON objects
+* JSON Objects can be converted into MIL STD message XML formats and converted to and from other formats using SAXON CE XSLT in the browser.  This functionality was demonstrated with NATO MTF FFI messages at CWIX 2015 and disseminated using the NATO SIP3 SOAP based protocol.. this code is not included but please make contact if there is interest in it.
 * A NodeJS server with SocketIO provides initialization with Javascript code and basic message relay without storage or other traditional server functions.  Socket.io is an event-driven Javascript library for real-time communications based on the WebSocket protocol.
 * The NodeJS server app implements an AngularJS module, largely to enforce a Model-View-Controller (MVC) pattern.
 * The browser client implements Javascript library Cesium for 3D mapping capabilities.
@@ -20,6 +20,7 @@ Future collaborative work may include:
 * Implementation of client/unit level track adjustments for Wargaming.
 * Implementation of proximity and visibility algorithms for Communication planning and Wargaming.
 * Packaging as an Android App for use as a lightweight tactical position reporting and display as a Combat Relevant PLI capability for individual operators and small units.
+* Unit tests !
 
 ### Run the Current Demo
 
