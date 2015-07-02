@@ -51,10 +51,15 @@ To run the demo:
 
 ### Components Employed ###
   • Cesium Web Map
+
   • AngularJS Framework
+
   • HTML5 IndexedDb
+
   • SAXON CE XSLT library
+
   • Node.js
+
   • SocketIO
 
 ### License ###
