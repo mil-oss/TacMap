@@ -39,6 +39,14 @@ Future collaborative work may include:
 • Implementation of proximity and visibility algorithms for Communication planning and Wargaming.
 • Packaging as an Android App for use as a lightweight tactical position reporting and display as a Combat Relevant PLI capability for individual operators and small units.
 
+### Components Employed ###
+• Cesium Web Map
+• AngularJS Framework
+• HTML5 IndexedDb
+• SAXON CE XSLT library
+• Node.js
+• SocketIO
+• 
 
 ### License ###
 
