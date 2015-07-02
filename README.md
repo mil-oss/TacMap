@@ -1,6 +1,4 @@
-<p align="center">
-<img src="https://github.com/organizations/mil-oss/repositories/TacMap" width="50%" />
-</p>
+
 
 TacMap is a browser based track generation and communication tool which allows the designation of movement paths for simulated entities and periodic reporting of positions over time 
 
