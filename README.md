@@ -37,7 +37,7 @@ To run the demo:
 * Click RUN to start movements.  Positions will be updated on the Server view and on any connected clients.
 *  The Networks buttons will select or obscure associated units
 * Units and Networks are assigned in the defaultScenario.xml file.  To create new scenarios adjust this file and save from that.
-* The "Save" operation overwrites or "Saves As" a new Scenario in teh IndexedDB local storage of the browser.
+* The "Save" operation overwrites or "Saves As" a new Scenario in the IndexedDB local storage of the browser.
 * The "Export" and "Import" functions save and load JSON data to the server for persistence external to the browser.
 
 ### Components Employed ###
