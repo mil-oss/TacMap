@@ -14,30 +14,31 @@ TacMap is a browser based track generation and communication tool which allows t
 * The functionality has been tested using Firefox and Chrome browsers.
 
 ### Way Forward ###
-##Future collaborative work may include:##
-* The communication of MIL-STD VMF binary messages directly to and from the browser client
-* The creation of MIL-STD messages such as VMF and MTF by user interactions with the visualization client and mapping capabilities.
-* Implementation of client/unit level track adjustments for Wargaming.
-* Implementation of proximity and visibility algorithms for Communication planning and Wargaming.
-* Packaging as an Android App for use as a lightweight tactical position reporting and display as a Combat Relevant PLI capability for individual operators and small units.
+Future collaborative work may include:
+#### The communication of MIL-STD VMF binary messages directly to and from the browser client
+#### The creation of MIL-STD messages such as VMF and MTF by user interactions with the visualization client and mapping capabilities.
+#### Implementation of client/unit level track adjustments for Wargaming.
+#### Implementation of proximity and visibility algorithms for Communication planning and Wargaming.
+####Packaging as an Android App for use as a lightweight tactical position reporting and display as a Combat Relevant PLI capability for individual operators and small units.
+
 ### Run the Current Demo.. ###
 
 To run the demo:
-# Install Node.js
-# Check out project
-# In the TacMap directory type "npm install"
-# In the TacMap directory type "node tacmap.js"
-# Use an HTML5 compatible browser to go to "http://localhost:8585/server"
-# Use an HTML5 compatible browser to go to "http://localhost:8585/unit"
-# To import a scenario without planned paths use the "import" button in the Plan Scenario and select "Malmo"
-# To select a scenario with planned paths use the "import" button in the Plan Scenario tab and select "Bydgoszcz"
-# These Scenarios will be saved in the browser IndexedDB for selection under the Scenarios tab
-# Use Set Location and Edit Waypoints check boxes with a selected unit to plan a scenario choose a speed to associate with movement segments.
-# Click RUN to start movements.  Positions will be updated on the Server view and on any connected clients.
-# The Networks buttons will select or obscure associated units
-# Units and Networks are assigned in the defaultScenario.xml file.  To create new scenarios adjust this file and save from that.
-# The "Save" operation overwrites or "Saves As" a new Scenario in teh IndexedDB local storage of the browser.
-# The "Export" and "Import" functions save and load JSON data to the server for persistence external to the browser.
+#### Install Node.js
+#### Check out project
+#### In the TacMap directory type "npm install"
+#### In the TacMap directory type "node tacmap.js"
+#### Use an HTML5 compatible browser to go to "http://localhost:8585/server"
+#### Use an HTML5 compatible browser to go to "http://localhost:8585/unit"
+#### To import a scenario without planned paths use the "import" button in the Plan Scenario and select "Malmo"
+#### To select a scenario with planned paths use the "import" button in the Plan Scenario tab and select "Bydgoszcz"
+#### These Scenarios will be saved in the browser IndexedDB for selection under the Scenarios tab
+#### Use Set Location and Edit Waypoints check boxes with a selected unit to plan a scenario choose a speed to associate with movement segments.
+#### Click RUN to start movements.  Positions will be updated on the Server view and on any connected clients.
+#### The Networks buttons will select or obscure associated units
+#### Units and Networks are assigned in the defaultScenario.xml file.  To create new scenarios adjust this file and save from that.
+#### The "Save" operation overwrites or "Saves As" a new Scenario in teh IndexedDB local storage of the browser.
+#### The "Export" and "Import" functions save and load JSON data to the server for persistence external to the browser.
 
 ### Components Employed ###
 • Cesium Web Map
