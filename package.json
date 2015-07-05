@@ -5,9 +5,9 @@
   "homepage": "http://natomtf.moesol.com/TacMap",
   "license": "GPL-3.0",
   "repository": "https://github.com/mil-oss/TacMap.git",
-  "main": "tacmap.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node tacmap.js"
+    "start": "node app.js"
   },
   "devDependencies": {
     "compression": "1.0.8",
