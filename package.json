@@ -19,6 +19,6 @@
     "express": "4.10.2",
     "socket.io": "1.3.5"
   },
-  "author": "Jmaes Neushul",
+  "author": "James Neushul",
   "readmeFilename": "README.md"
 }
