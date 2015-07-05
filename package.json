@@ -1,36 +1,36 @@
 {
-    "name": "tacmap",
-    "version": "0.0.1",
-    "description": "Simulation using Cesium JavaScript library to visualize PLI message traffic for moving units on a map.",
-    "homepage": "http://natomtf.moesol.com/TacMap",
-    "license": "GPL-3.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/mil-oss/TacMap.git"
-    },
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js"
-    },
-    "devDependencies": {
-        "compression": "1.0.8",
-        "grunt": "^0.4.5",
-        "request": "2.36.0",
-        "socket.io-client": "^1.3.5",
-        "grunt-contrib-copy": "0.4.x",
-        "grunt-contrib-clean": "0.4.x"
-    },
-    "dependencies": {
-        "body-parser": "^1.13.1",
-        "express": "4.10.2",
-        "socket.io": "1.3.5"
-    },
-    "author": "James Neushul",
-    "bugs": {
-        "url": "https://github.com/mil-oss/TacMap/issues"
-    },
-    "directories": {
-        "doc": "doc",
-        "test": "test"
-    }
+  "name": "tacmap",
+  "version": "0.0.1",
+  "description": "Simulation using Cesium JavaScript library to visualize PLI message traffic for moving units on a map.",
+  "homepage": "http://natomtf.moesol.com/TacMap",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mil-oss/TacMap.git"
+  },
+  "main": "tacmap.js",
+  "scripts": {
+    "start": "node tacmap.js"
+  },
+  "devDependencies": {
+    "compression": "1.0.8",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "0.4.x",
+    "grunt-contrib-copy": "0.4.x",
+    "request": "2.36.0",
+    "socket.io-client": "^1.3.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "express": "4.10.2",
+    "socket.io": "1.3.5"
+  },
+  "author": "James Neushul",
+  "bugs": {
+    "url": "https://github.com/mil-oss/TacMap/issues"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  }
 }
