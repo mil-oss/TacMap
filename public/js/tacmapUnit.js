@@ -77,7 +77,7 @@ TacMapUnit.config(function ($indexedDBProvider) {
     });
 });
 // ***** CONTROLLERS ******//
-TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientService, MsgClientService) {
+TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoUnitService, MsgUnitService) {
     var vwctl = this;
     console.log("viewCtl");
     var dB = $indexedDB;
@@ -89,7 +89,7 @@ TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientS
     vwctl.loc = [];
     $scope.netselected = [];
     $scope.selscene = {id: 0, value: 'Default Scenario'};
-    vwctl.scenarioname = GeoClientService.scenarioname;
+    vwctl.scenarioname = GeoUnitService.scenarioname;
     //
     vwctl.lftClickHandler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
     vwctl.lftClickHandler.setInputAction(function (mouse) {
@@ -105,14 +105,14 @@ TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientS
             Cesium.ScreenSpaceEventType.LEFT_CLICK);
     //
     for (i = 0; i < resources.length; i++) {
-        syncResource($http, resources[i], dB, vwctl, GeoClientService, $scope);
+        syncResource($http, resources[i], dB, vwctl, GeoUnitService, $scope);
     }
     vwctl.selectUnit = function (u, zoomto) {
         //console.log(u._id);
-        vwctl.unitselected = GeoClientService.sdatasources[$scope.selscene.value].entities.getById(u._id);
+        vwctl.unitselected = GeoUnitService.sdatasources[$scope.selscene.value].entities.getById(u._id);
         vwctl.loc = vwctl.getLoc(vwctl.unitselected);
         if (zoomto) {
-            GeoClientService.sdatasources[$scope.selscene.value].selectedEntity = vwctl.unitselected;
+            GeoUnitService.sdatasources[$scope.selscene.value].selectedEntity = vwctl.unitselected;
             viewer.selectedEntity = vwctl.unitselected;
             viewer.camera.flyTo({
                 destination: Cesium.Cartesian3.fromDegrees(vwctl.loc[1], vwctl.loc[0], 10000.0),
@@ -137,25 +137,25 @@ TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientS
     };
     vwctl.selectNetwork = function (net) {
         //console.log("selectNetwork " + net._name);
-        vwctl.entities = GeoClientService.entities;
+        vwctl.entities = GeoUnitService.entities;
         if ($scope.netselected[net._name]) {
             if ($scope.netselected[net._name].show === true) {
                 $scope.netselected[net._name].show = false;
-                MsgClientService.leaveNet(net._name);
+                MsgUnitService.leaveNet(net._name);
             } else {
                 $scope.netselected[net._name].show = true;
                 $scope.netselected[net._name].network = net._name;
-                MsgClientService.joinNet(net._name);
+                MsgUnitService.joinNet(net._name);
             }
-            GeoClientService.setNetViz(vwctl.entities, $scope.netselected);
+            GeoUnitService.setNetViz(vwctl.entities, $scope.netselected);
             return $scope.netselected[net._name].show;
         } else {
             $scope.netselected[net._name] = [];
             $scope.netselected[net._name].show = true;
             $scope.netselected[net._name].network = net._name;
-            GeoClientService.setNetViz(vwctl.entities, $scope.netselected);
-            MsgClientService.joinNet(net._name);
-            return $scope.netselected[GeoClientService.entities, net._name].show;
+            GeoUnitService.setNetViz(vwctl.entities, $scope.netselected);
+            MsgUnitService.joinNet(net._name);
+            return $scope.netselected[GeoUnitService.entities, net._name].show;
         }
     };
     vwctl.netSelected = function (net) {
@@ -163,63 +163,63 @@ TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientS
             return $scope.netselected[net._name].show;
         }
     };
-    MsgClientService.socket.on('set scenario', function (data) {
+    MsgUnitService.socket.on('set scenario', function (data) {
         console.log('set scenario');
         $scope.netselected = [];
-        viewer.dataSources.remove(GeoClientService.sdatasources[$scope.selscene.value]);
+        viewer.dataSources.remove(GeoUnitService.sdatasources[$scope.selscene.value]);
         dB.openStore("Scenario", function (store) {
             store.upsert({name: data.scenarioname, data: data.scenariodata});
         }).then(function () {
             $scope.selscene.value = data.scenarioname;
             vwctl.entities = data.scenariodata.Scenario.Entities.Entity;
             vwctl.networks = data.scenariodata.Scenario.Networks.Network;
-            GeoClientService.initGeodesy(data.scenarioname, data.scenariodata, $scope);
-            GeoClientService.joinNetworks(vwctl.entities, vwctl.networks, MsgClientService, $scope);
+            GeoUnitService.initGeodesy(data.scenarioname, data.scenariodata, $scope);
+            GeoUnitService.joinNetworks(vwctl.entities, vwctl.networks, MsgUnitService, $scope);
         });
     });
 });
-TacMapUnit.controller('ClientMesssageCtl', function ($indexedDB, $scope, MsgClientService, GeoClientService) {
+TacMapUnit.controller('UnitMesssageCtl', function ($indexedDB, $scope, MsgUnitService, GeoUnitService) {
     var msgctl = this;
     msgctl.dB = $indexedDB;
     msgctl.messages = [];
     msgctl.moveUnit = function (uid, lat, lon) {
         console.log("moveUnit: " + uid);
-        GeoClientService.sdatasources[$scope.selscene.value].entities.getById(uid).position = Cesium.Cartesian3.fromDegrees(lon, lat);
+        GeoUnitService.sdatasources[$scope.selscene.value].entities.getById(uid).position = Cesium.Cartesian3.fromDegrees(lon, lat);
     };
-    MsgClientService.socket.on('error', console.error.bind(console));
-//    MsgClientService.socket.on('message', console.log.bind(console));
-    MsgClientService.socket.on('connection', function (data) {
-        console.log("Client Connected " + data.socketid);
-        MsgClientService.clientid = data.socketid;
-        MsgClientService.socket.emit('client connected', {message: 'client', id: data.socketid});
-        msgctl.messages.push({text: "Client Connected"});
+    MsgUnitService.socket.on('error', console.error.bind(console));
+//    MsgUnitService.socket.on('message', console.log.bind(console));
+    MsgUnitService.socket.on('connection', function (data) {
+        console.log("Unit Connected " + data.socketid);
+        MsgUnitService.unitid = data.socketid;
+        MsgUnitService.socket.emit('unit connected', {message: 'unit', id: data.socketid});
+        msgctl.messages.push({text: "Unit Connected"});
     });
-    MsgClientService.socket.on('send msg', function (data) {
+    MsgUnitService.socket.on('msg sent', function (data) {
         //console.log("receive msg " + data.net + ": " + data.message.unit + " " + data.message.position[0] + ", " + data.message.position[1]);
         msgctl.messages.push({text: "POSREP " + data.net + " " + data.message.unit});
         msgctl.moveUnit(data.message.unit, data.message.position[0], data.message.position[1]);
     });
-    MsgClientService.socket.on('client disconnected', function (data) {
-        console.log("Client disconnected " + data.socketid);
-        msgctl.messages.push({text: "Client disconnected"});
+    MsgUnitService.socket.on('unit disconnected', function (data) {
+        console.log("Unit disconnected " + data.socketid);
+        msgctl.messages.push({text: "Unit disconnected"});
     });
-    MsgClientService.socket.on('client joined', function (data) {
+    MsgUnitService.socket.on('unit joined', function (data) {
         //console.log('Joined Network: ' + data.netname);
         msgctl.messages.push({text: 'Joined Network: ' + data.netname});
     });
-    MsgClientService.socket.on('client left', function (data) {
+    MsgUnitService.socket.on('unit left', function (data) {
         console.log('Left Network: ' + data.netname);
         msgctl.messages.push({text: 'Left Network: ' + data.netname});
     });
-    MsgClientService.socket.on('server joined', function (data) {
+    MsgUnitService.socket.on('server joined', function (data) {
         //console.log('Server ' + data.serverid + ' Joined Net: ' + data.netname);
         msgctl.messages.push({text: 'Server ' + data.serverid + ' Joined Net: ' + data.netname});
     });
-    MsgClientService.socket.on('server left', function (data) {
+    MsgUnitService.socket.on('server left', function (data) {
         console.log('Server ' + data.serverid + ' Left Net: ' + data.netname);
         msgctl.messages.push({text: 'Server ' + data.serverid + ' Left Net: ' + data.netname});
     });
-    MsgClientService.socket.on('move unit', function (data) {
+    MsgUnitService.socket.on('move unit', function (data) {
         msgctl.moveUnit(data.uid, data.lat, data.lon);
     });
 });
@@ -258,7 +258,7 @@ TacMapUnit.controller('menuCtrl', function ($scope) {
     };
 });
 // ***** SERVICES ******//
-TacMapUnit.factory('GeoClientService', function () {
+TacMapUnit.factory('GeoUnitService', function () {
     var geosvc = {
     };
     geosvc.entities = [];
@@ -360,10 +360,10 @@ TacMapUnit.factory('GeoClientService', function () {
     };
     return geosvc;
 });
-TacMapUnit.factory('MsgClientService', function () {
+TacMapUnit.factory('MsgUnitService', function () {
     var msgsvc = {
     };
-    msgsvc.clientid;
+    msgsvc.unitid;
     msgsvc.scenarioname;
     msgsvc.connected = false;
     msgsvc.sending = false;
@@ -375,10 +375,10 @@ TacMapUnit.factory('MsgClientService', function () {
         if (!msgsvc.messagelist[netname]) {
             msgsvc.messagelist[netname] = [];
         }
-        msgsvc.socket.emit('client join', {clientid: msgsvc.clientid, netname: netname});
+        msgsvc.socket.emit('unit join', {unitid: msgsvc.unitid, netname: netname});
     };
     msgsvc.leaveNet = function (netname) {
-        msgsvc.socket.emit('client leave', {clientid: msgsvc.clientid, netname: netname});
+        msgsvc.socket.emit('unit leave', {unitid: msgsvc.unitid, netname: netname});
     };
     return msgsvc;
 });
@@ -414,7 +414,7 @@ TacMapUnit.factory('DlgBx', function ($window, $q) {
     };
     return dlg;
 });
-function syncResource($http, url, dB, vwctl, GeoClientService, $scope) {
+function syncResource($http, url, dB, vwctl, GeoUnitService, $scope) {
     $http.get(url).success(function (resdata, status, headers) {
         var mod = headers()['last-modified'];
         var filename = url.substring(url.lastIndexOf('/') + 1);
@@ -432,13 +432,6 @@ function syncResource($http, url, dB, vwctl, GeoClientService, $scope) {
                 }
             });
         });
-        if (filename === 'defaultScenario.xml') {
-            console.log('init geo');
-            var spdata = xj.xml_str2json(resdata);
-            vwctl.scenario = spdata;
-            vwctl.entities = spdata.Scenario.Entities.Entity;
-            GeoClientService.initGeodesy("Default", spdata, $scope);
-        }
     }).error(function () {
         console.log('Error getting resource');
     });

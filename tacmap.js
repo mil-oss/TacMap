@@ -66,45 +66,59 @@ app.put('/xml/*', function (req, res) {
         res.end();
     });
 });
-
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8000
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 server.listen(server_port, server_ip_address, function () {
-    console.log('listening on '+server_port);
+    console.log('listening on ' + server_port);
 });
 //
 var scenarioname = "Default Scenario";
 var scenariodata = [];
 var servers = [];
-var clients = [];
+var units = [];
+var allconnections = [];
+var scenarioRunning = false;
 
 io.on('connection', function (socket) {
-    // Use socket to communicate with this particular client only, sending it it's own id
+
+    allconnections.push(socket);
+
+    socket.on('disconnect', function () {
+        var i = allconnections.indexOf(socket);
+        console.log(i.id + " disconnected");
+        delete allconnections[i];
+    });
+    // Use socket to communicate with this particular unit only, sending it it's own id
     socket.emit('connection', {message: 'Msg Socket Ready', socketid: socket.id});
 
     socket.on('server connected', function (data) {
         console.log("server connect to socket: " + data.socketid + ", scenario:" + data.scenarioname);
-        if(scenarioname==="Default Scenario"){
-            scenariodata=data.scenariodata;
+        servers.push({server: data.socketid});
+        if (scenarioname === "Default Scenario") {
+            scenariodata = data.scenariodata;
             io.emit('init server', {target: "server", scenarioname: data.scenarioname, scenariodata: scenariodata});
-        }else{
+        } else {
             io.emit('init server', {target: "server", scenarioname: scenarioname, scenariodata: scenariodata});
         }
+        if (scenarioRunning) {
+            io.emit('start scenario');
+        }
     });
-    socket.on('client connected', function (data) {
-        console.log("client connect: " + data.id + " set scenario: " + scenarioname);
-        io.emit('client connected', {scenarioname: scenarioname, scenariodata: scenariodata});
+    socket.on('unit connected', function (data) {
+        console.log("units connect: " + data.id + " set scenario: " + scenarioname);
+        units.push({unit: data.id});
+        io.emit('unit connected', {scenarioname: scenarioname, scenariodata: scenariodata});
     });
     socket.on('send msg', function (data) {
         console.log('send msg from ' + data.message.unit + ' to ' + data.net);
-        socket.to(data.net).emit('send msg', data);
+        socket.to(data.net).emit('msg sent', data);
     });
-    socket.on('client join', function (data) {
-        //console.log(data.clientid + ' joined ' + data.netname);
+    socket.on('unit join', function (data) {
+        //console.log(data.unitid + ' joined ' + data.netname);
         socket.join(data.netname);
-        io.emit('client joined', {clientid: data.clientid, netname: data.netname});
+        io.emit('unit joined', {unitid: data.unitid, netname: data.netname});
     });
     socket.on('server join', function (data) {
         //console.log(data.serverid + ' joined ' + data.netname);
@@ -116,10 +130,10 @@ io.on('connection', function (socket) {
         socket.leave(data.netname);
         io.emit('server left', {serverid: data.serverid, netname: data.netname});
     });
-    socket.on('client leave', function (data) {
-        //console.log(data.clientid + ' left ' + data.netname);
+    socket.on('unit leave', function (data) {
+        //console.log(data.unitid + ' left ' + data.netname);
         socket.leave(data.netname);
-        io.emit('client left', {clientid: data.clientid, netname: data.netname});
+        io.emit('unit left', {unitid: data.unitid, netname: data.netname});
     });
     socket.on('add entity', function (data) {
         console.log("emit add entity: " + data._id);
@@ -129,6 +143,17 @@ io.on('connection', function (socket) {
         console.log("set scenario: " + data.scenarioname);
         scenarioname = data.scenarioname;
         scenariodata = data.scenariodata;
-        io.emit('set scenario', {target: "client", scenarioname: scenarioname, scenariodata: scenariodata});
+        io.emit('set scenario', {target: "unit", scenarioname: scenarioname, scenariodata: scenariodata});
+    });
+    socket.on('scenario running', function () {
+        scenarioRunning = true;
+        io.emit('start scenario');
+    });
+    socket.on('scenario stopped', function () {
+        scenarioRunning = false;
+        io.emit('stop scenario');
+    });
+    socket.on('scenario time', function (data) {
+        io.emit('set time',data);
     });
 });
