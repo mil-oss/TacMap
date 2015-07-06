@@ -4,10 +4,8 @@
     /*jshint es3:false*/
 
     var express = require('express');
-    var compression = require('compression');
     var url = require('url');
     var request = require('request');
-    var bodyParser = require('body-parser');
     var mime = express.static.mime;
     mime.define({
         'application/json': ['czml', 'json', 'geojson', 'topojson', 'gltf'],

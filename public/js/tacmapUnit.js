@@ -165,11 +165,12 @@ TacMapUnit.controller('viewCtl', function ($indexedDB, $scope, $http, GeoClientS
     };
     MsgClientService.socket.on('set scenario', function (data) {
         console.log('set scenario');
+        $scope.netselected = [];
+        viewer.dataSources.remove(GeoClientService.sdatasources[$scope.selscene.value]);
         dB.openStore("Scenario", function (store) {
             store.upsert({name: data.scenarioname, data: data.scenariodata});
         }).then(function () {
             $scope.selscene.value = data.scenarioname;
-            viewer.dataSources.remove(GeoClientService.sdatasources[$scope.selscene.value]);
             vwctl.entities = data.scenariodata.Scenario.Entities.Entity;
             vwctl.networks = data.scenariodata.Scenario.Networks.Network;
             GeoClientService.initGeodesy(data.scenarioname, data.scenariodata, $scope);
@@ -263,15 +264,15 @@ TacMapUnit.factory('GeoClientService', function () {
     geosvc.entities = [];
     geosvc.scenename = null;
     geosvc.sdatasources = [];
-    geosvc.initGeodesy = function (scenename, scenariodata, $scope) {
+    geosvc.initGeodesy = function (scenename, scenariodata) {
         console.log("initGeodesy " + scenename);
         geosvc.scenename = scenename;
-        $scope.selscene.value = scenename;
         geosvc.sdatasources[geosvc.scenename] = new Cesium.CustomDataSource(geosvc.scenename);
-        viewer.dataSources.add(geosvc.sdatasources[$scope.selscene.value]);
+        viewer.dataSources.add(geosvc.sdatasources[geosvc.scenename]);
         //console.log(scenariodata);
         var polygons = scenariodata.Scenario.Polygons.Polygon;
         var entities = scenariodata.Scenario.Entities.Entity;
+        geosvc.entities = scenariodata.Scenario.Entities.Entity;
         geosvc.addPolygons(polygons);
         geosvc.addEntities(entities);
         //console.log(geosvc.movementsegments);
@@ -326,11 +327,11 @@ TacMapUnit.factory('GeoClientService', function () {
             }
         });
     };
-    geosvc.setNetViz = function (e, vwsel) {
+    geosvc.setNetViz = function (e, netsel) {
         geosvc.entities = e;
         for (i = 0; i < e.length; i++) {
-            if (vwsel[e[i]._network] && geosvc.sdatasources[geosvc.scenename].entities.getById(e[i]._id)) {
-                if (vwsel[e[i]._network].show) {
+            if (netsel[e[i]._network] && geosvc.sdatasources[geosvc.scenename].entities.getById(e[i]._id)) {
+                if (netsel[e[i]._network].show) {
                     geosvc.sdatasources[geosvc.scenename].entities.getById(e[i]._id).show = true;
                 } else {
                     geosvc.sdatasources[geosvc.scenename].entities.getById(e[i]._id).show = false;
