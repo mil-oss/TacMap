@@ -27,6 +27,12 @@ body{
     height:100%;
     background-color:black;
 }
+/*Remove button padding in FF*/
+button::-moz-focus-inner {
+    border:0;
+    padding:0;
+}
+
 #cesiumContainer{
     position:absolute;
     left:180px;

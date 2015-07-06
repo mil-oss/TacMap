@@ -262,8 +262,8 @@ TacMapServer.controller('storeCtl', function ($indexedDB, $scope, $http, GeoServ
         console.log("loadScenario " + nextscene.value);
         //console.log("Current Scenario:" + stctl.currscene.value);
         $scope.netselected = [];
-        viewer.dataSources.remove(GeoService.sdatasources[stctl.currscene.value]);
-        viewer.dataSources.remove(GeoService.wpdatasources[stctl.currscene.value]);
+        viewer.dataSources.remove(GeoService.sdatasources[$scope.selscene.value]);
+        viewer.dataSources.remove(GeoService.wpdatasources[$scope.selscene.value]);
         dB.openStore("Scenario", function (store) {
             store.find(nextscene.value).then(function (sc) {
                 stctl.entities = sc.data.Scenario.Entities.Entity;

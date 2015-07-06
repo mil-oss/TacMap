@@ -6,11 +6,51 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>TAC MAP</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
-    </body>
+        <h4>TACMAP MESSAGING DEMONSTRATION APPLICATION</h3>
+
+        <h5><i>TacMap is a browser based track generation and communication tool which allows the designation of movement paths for simulated entities and periodic reporting of positions over time.</i></h5>
+
+    <div>GITHUB Site:<a href="https://github.com/Neutron/TacMap">https://github.com/Neutron/TacMap</a></div>
+    <p>To run the demo:</p>
+    <p>To configure and run a scenario use an HTML5 compatible browser to go to:</p>
+    <p><a href="http://tacmap-neushul.rhcloud.com/server" target="_blank">http://tacmap-neushul.rhcloud.com/server</a></p>
+    <p>To view unit reports in HTML5 compatible browser to go to:</p>
+    <p><a href="http://tacmap-neushul.rhcloud.com/unit" target="_blank">http://tacmap-neushul.rhcloud.com/unit</a></p>
+
+    <h4>Server Operation</h4>
+    <div>
+        <ol>
+            <li>To import a scenario without planned paths use the "import" button in the Plan Scenario and select "Malmo"</li>
+            <li>To select a scenario with planned paths use the "import" button in the Plan Scenario tab and select "Bydgoszcz"</li>
+            <li>These Scenarios will be saved in the browser IndexedDB for selection under the Scenarios tab</li>
+            <li>Use Set Location and Edit Waypoints check boxes with a selected unit to plan a scenario choose a speed to associate with movement segments.</li>
+            <li>Click RUN to start movements. Positions will be updated on the Server view and on any connected clients.</li>
+            <li>The Networks buttons will select or obscure associated units</li>
+            <li>Units and Networks are assigned in the defaultScenario.xml file. To create new scenarios adjust this file and save from that.</li>
+            <li>The "Save" operation overwrites or "Saves As" a new Scenario in the IndexedDB local storage of the browser.</li>
+            <li>The "Export" and "Import" functions save and load JSON data to the server for persistence external to the browser.</li>
+        </ol>
+    </div>
+
+    <div>
+        <b>Components Employed</b>
+        <ul>
+            <li>Cesium Web Map</li>
+            <li>AngularJS Framework</li>
+            <li>HTML5 IndexedDb</li>
+            <li>SAXON CE XSLT library</li>
+            <li>Node.js</li>
+            <li>SocketIO</li>
+        </ul>
+    </div>
+    
+    <div>
+        <span><b>License: </b><span>GPL 3.0</span></span>
+    </div>
+</body>
 </html>

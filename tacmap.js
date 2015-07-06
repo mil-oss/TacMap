@@ -29,6 +29,10 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use(compression());
 
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/index.html');
+});
+
 app.get('/server', function (req, res) {
     res.sendFile(__dirname + '/public/server.html');
 });
@@ -65,8 +69,10 @@ app.put('/xml/*', function (req, res) {
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-server.listen(8585, "0.0.0.0", function () {
-    console.log('listening on 8585');
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8000
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+server.listen(server_port, server_ip_address, function () {
+    console.log('listening on '+server_port);
 });
 //
 var scenarioname = "Default Scenario";
