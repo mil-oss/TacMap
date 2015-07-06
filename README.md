@@ -1,8 +1,11 @@
-### Prototype Effort - Work in Progress
+### TacMap
 
 TacMap is a browser based track generation and communication tool which allows the designation of movement paths for simulated entities and periodic reporting of positions over time 
 
+### Live Demo on OpenShift: <a href="http://tacmap-neushul.rhcloud.com/" target="_Blank">http://tacmap-neushul.rhcloud.com/</a>
+
 ### Project Description
+* This is a prototype work in progress
 * This project was developed to generate sample tracks for use in MIL STD messaging testing
 * All messages are generated, consumed and stored using Javascript in browsers.
 * Data persistence is achieved using HTML5 IndexedDb - which allows disconnected functionality after initialization.
