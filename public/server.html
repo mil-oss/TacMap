@@ -94,6 +94,7 @@
                                 <button class="smbtn" data-ng-click="mctl.resetScenario()">RESET</button>
                                 <button class="smbtn" data-ng-click="">REPT</button>
                             </div>
+                            <div data-ng-show="mctl.running">Scenario Running</div>
                             <div class="bsect">
                                 <span>Timer: {{mctl.time}}s</span>
                                 <span class="wpchkbx">Show Waypoints<input data-ng-model="sctl.showWP" data-ng-false-value="0" type="checkbox" data-ng-change="sctl.toggleWaypoints()"/></span>

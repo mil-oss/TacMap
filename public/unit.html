@@ -63,7 +63,7 @@
                         <div class="accordion__tab-title" data-ng-click="openTab('tab three')"
                              >MESSAGE LOG</div>
                         <div class="accordion__tab-content" data-ng-show="isOpenTab('tab three')">
-                            <div class="units" data-ng-controller="ClientMesssageCtl as msgctl">
+                            <div class="units" data-ng-controller="UnitMesssageCtl as msgctl">
                                 <div data-ng-repeat="m in msgctl.messages">
                                     <div class="msglisting" data-ng-model="msgctl.msg">
                                         <span>{{m.text}}</span>

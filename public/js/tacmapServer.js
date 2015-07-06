@@ -524,10 +524,10 @@ TacMapServer.controller('storeCtl', function ($indexedDB, $scope, $http, GeoServ
         MsgService.serverid = data.socketid;
         MsgService.connectServer(data, $scope.selscene.value, stctl.scenario);
     });
-    MsgService.socket.on('client connected', function (data) {
-        console.log("Client connected " + data.id);
+    MsgService.socket.on('unit connected', function (data) {
+        console.log("Unit connected " + data.id);
         MsgService.setScenario($scope.selscene.value, stctl.scenario);
-        //msgctl.messages.push({text: "Client " + data.socketid + " connected"});
+        //msgctl.messages.push({text: "Unit " + data.socketid + " connected"});
 
     });
     MsgService.socket.on('init server', function (data) {
@@ -566,6 +566,8 @@ TacMapServer.controller('messageCtl', function ($indexedDB, $scope, $interval, G
         msgctl.movecount = 0;
         msgctl.time = 0;
         msgctl.running = false;
+        MsgService.socket.emit("scenario stopped");
+        MsgService.socket.emit("scenario time",{time:msgctl.time});
         $interval.cancel(msgctl.playScenario);
         for (m = 0; m < msgctl.units.length; m++) {
             var mv = GeoService.movementsegments[msgctl.units[m]][0];
@@ -577,6 +579,7 @@ TacMapServer.controller('messageCtl', function ($indexedDB, $scope, $interval, G
     msgctl.runScenario = function () {
         console.log("playScenario");
         msgctl.running = true;
+        MsgService.socket.emit("scenario running");
         for (var key in GeoService.movementsegments) {
             if (GeoService.movementsegments.hasOwnProperty(key)) { //to be safe                 
                 msgctl.units.push(key);
@@ -589,7 +592,8 @@ TacMapServer.controller('messageCtl', function ($indexedDB, $scope, $interval, G
     };
     msgctl.pauseScenario = function () {
         console.log("pauseScenario");
-        msgctl.running = false;
+        msgctl.running= false;
+        MsgService.socket.emit("scenario stopped");
         $interval.cancel(msgctl.playScenario);
     }; //move units to location at specified time interval
     msgctl.moveUnits = function () {
@@ -605,33 +609,34 @@ TacMapServer.controller('messageCtl', function ($indexedDB, $scope, $interval, G
         }
         msgctl.movecount++;
         msgctl.time = (msgctl.movecount * msgctl.interval) / 1000;
+        MsgService.socket.emit("scenario time",{time:msgctl.time});
     };
     msgctl.sendReport = function (msgobj) {
         //default ui
         MsgService.sendMessage(msgobj, msgobj.network);
     };
-    msgctl.moveUnit = function (uid, lat, lon) {
+    msgctl.moveUnit = function (uid, sentto, net,lat, lon) {
         console.log("moveUnit: " + uid);
         GeoService.sdatasources[$scope.selscene.value].entities.getById(uid).position = Cesium.Cartesian3.fromDegrees(lon, lat);
-        msgctl.sendReport({unit: uid, to: unit._report_to, time: new Date(), position: [lat, lon], network: unit._network});
+        msgctl.sendReport({unit: uid, to: sentto, time: new Date(), position: [lat, lon], network: net});
     };
     MsgService.socket.on('error', console.error.bind(console));
     MsgService.socket.on('message', console.log.bind(console));
-    MsgService.socket.on('send msg', function (data) {
+    MsgService.socket.on('msg sent', function (data) {
         msgctl.messages.push({text: "POSREP " + data.net + " " + data.message.unit});
-        msgctl.moveUnit(data.message.unit, data.message.position[0], data.message.position[1]);
+        GeoService.sdatasources[$scope.selscene.value].entities.getById(data.message.unit).position = Cesium.Cartesian3.fromDegrees(data.message.position[1], data.message.position[0]);
     });
-    MsgService.socket.on('client disconnected', function (data) {
-        console.log("Client disconnected " + data.socketid);
-        msgctl.messages.push({text: "Client " + data.socketid + " disconnected"});
+    MsgService.socket.on('unit disconnected', function (data) {
+        console.log("Unit disconnected " + data.socketid);
+        msgctl.messages.push({text: "Unit " + data.socketid + " disconnected"});
     });
-    MsgService.socket.on('client joined', function (data) {
-        //console.log('Client ' + data.clientid + ' Joined Network: ' + data.netname);
-        msgctl.messages.push({text: 'Client ' + data.clientid + ' Joined Network: ' + data.netname});
+    MsgService.socket.on('unit joined', function (data) {
+        //console.log('Unit ' + data.unitid + ' Joined Network: ' + data.netname);
+        msgctl.messages.push({text: 'Unit ' + data.unitid + ' Joined Network: ' + data.netname});
     });
-    MsgService.socket.on('client left', function (data) {
-        console.log('Client ' + data.clientid + ' Left Network: ' + data.netname);
-        msgctl.messages.push({text: 'Client ' + data.clientid + ' Left Network: ' + data.netname});
+    MsgService.socket.on('unit left', function (data) {
+        console.log('Unit ' + data.unitid + ' Left Network: ' + data.netname);
+        msgctl.messages.push({text: 'Unit ' + data.unitid + ' Left Network: ' + data.netname});
     });
     MsgService.socket.on('server joined', function (data) {
         //console.log('Joined Network: ' + data.netname);
@@ -640,6 +645,18 @@ TacMapServer.controller('messageCtl', function ($indexedDB, $scope, $interval, G
     MsgService.socket.on('server left', function (data) {
         //console.log('Left Network: ' + data.netname);
         msgctl.messages.push({text: 'Left Network: ' + data.netname});
+    });
+    MsgService.socket.on("start scenario", function () {
+        msgctl.running= true;
+        $scope.$apply();
+    });
+    MsgService.socket.on("stop scenario", function () {
+        msgctl.running= false;
+        $scope.$apply();
+    });
+        MsgService.socket.on("set time", function (data) {
+        msgctl.time=data.time;
+        $scope.$apply();
     });
     //
     msgctl.timeCalc = function (timeobj) {
@@ -927,7 +944,7 @@ TacMapServer.factory('MsgService', function () {
     msgsvc.connected = false;
     msgsvc.sending = false;
     msgsvc.lastSendingTime = 0;
-    msgsvc.clients = [];
+    msgsvc.units = [];
     msgsvc.socket = io();
     // Sends a message
     msgsvc.joinNet = function (netname) {
