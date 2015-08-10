@@ -15,12 +15,12 @@
   "devDependencies": {
     "compression": "1.0.8",
     "request": "2.36.0",
-    "socket.io-client": "^1.3.5"
+    "socket.io-client": "^1.3.6"
   },
   "dependencies": {
     "body-parser": "^1.13.1",
     "express": "4.10.2",
-    "socket.io": "1.3.5"
+    "socket.io": "1.3.6"
   },
   "author": "James Neushul",
   "bugs": {
