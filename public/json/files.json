@@ -5,12 +5,12 @@
         "url": "/json/default.json"
     }, {
         "id": 1,
-        "scenario": "Bydgoszcz",
-        "name": "Bydgoszcz.json",
-        "url": "/json/Bydgoszcz.json"
+        "scenario": "TRAP",
+        "name": "TRAP.json",
+        "url": "/json/TRAP.json"
     }, {
-        "id": 3,
-        "scenario": "Malmo",
-        "name": "Malmo.json",
-        "url": "/json/Malmo.json"
+        "id": 2,
+        "scenario": "TRAP2",
+        "name": "TRAP2.json",
+        "url": "/json/TRAP2.json"
     }]
