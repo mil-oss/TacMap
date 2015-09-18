@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Mission name="CAMPEN Mission">
+    <Polygons>
+        <Polygon id="Default" name="CAMPEN" color="BLACK"
+            locations="33.18001084277221,-117.4229846837251,
+            33.42327132704204,-117.1024629654342,
+            33.65758088052254,-117.3890854539534,
+            33.37150444151094,-117.6408946837948,
+            33.18001084277221,-117.4229846837251"/>
+        <Polygon id="" name="" color="" locations=""/>
+    </Polygons>
+    <Entities>
+        <Entity id="RegtHq" name="REGT HQ" network="Regt" report_to="RegtHq" icon="img/10131000151211950000.png" location=""/>
+        <Entity id="BnHq" name="BN HQ" network="Bn" report_to="RegtHq" icon="img/10131000161211950000.png" location=""/>
+        <Entity id="CoHq" name="CO HQ" network="Co" report_to="BnHq" icon="img/10131000151211950000.png" location=""/>
+        <Entity id="PltHq" name="PLT HQ" network="Plt" report_to="CoHq" icon="img/10131000141211950000.png" location=""/>
+        <Entity id="Plt" name="PLT" network="Plt" report_to="PltHq" icon="img/10131000141211000000.png" location=""/>
+        <Entity id="Sqd" name="SQD_FM" network="Sqd" report_to="PltHq" icon="img/10131000121211000000.png" location=""/>
+        <Entity id="Ft" name="FT" network="Ft" report_to="Sqd" icon="img/10131000111211000000.png" location=""/>
+        <Entity id="Marine" name="Marine" network="Ft" report_to="Ft" icon="img/tacsym.png" location=""/>
+        <Entity id="Troop" name="Troop" network="Ft" report_to="Ft" icon="img/tacsym.png" location=""/>
+        <Entity id="Helo" name="Helo" network="Regt" report_to="RegtHq" icon="img/10130100001102000802.png" location=""/>
+        <Entity id="Drone" name="Drone" network="Regt" report_to="RegtHq" icon="img/10130100001103000000.png" location=""/>
+        <Entity id="Rescue" name="Rescue" network="Regt" report_to="RegtHq" icon="img/10131000001900000000.png" location=""/>
+        <Entity id="MeuArg" name="MEU ARG" network="Regt" report_to="RegtHq" icon="img/10133000001100000002.png" location=""/>
+        <Entity id="Op" name="OP" network="Co" report_to="CoHq" icon="img/10131000101212000000.png" location=""/>
+    </Entities>
+    <Speeds>
+        <Speed type="Dismount" value="1" units="m/s"/>
+        <Speed type="Vehicle" value="15" units="m/s"/>
+        <Speed type="Helo" value="100" units="m/s"/>
+        <Speed type="Jet" value="250" units="m/s"/>
+        <Speed type="Ship" value="12" units="m/s"/>
+    </Speeds>
+    <Symbols>
+        <Symbol type="REGT HQ" sic="10131000151211950000" path="img/10131000151211950000.png"/>
+        <Symbol type="BN HQ" sic="10131000161211950000" path="img/10131000161211950000.png"/>
+        <Symbol type="CO HQ" sic="10131000151211950000" path="img/10131000151211950000.png"/>
+        <Symbol type="PLT HQ" sic="10131000141211950000" path="img/10131000141211950000.png"/>
+        <Symbol type="PLT" sic="10131000141211000000" path="img/10131000141211000000.png"/>
+        <Symbol type="SQD_MOT" sic="10131000121211040000" path="img/10131000121211040000.png"/>
+        <Symbol type="SQD_FM" sic="10131000121211000000" path="img/10131000121211000000.png"/>
+        <Symbol type="FT" sic="10131000111211000000" path="img/10131000111211000000.png"/>
+        <Symbol type="Marine" sic="10231000001211000000" path="img/10231000001211000000.png"/>
+        <Symbol type="Troop" sic="10231000001211000000" path="img/10231000001211000000.png"/>
+        <Symbol type="Osprey" sic="10130100001102000802" path="img/10130100001102000802.png"/>
+        <Symbol type="Drone" sic="10130100001103000000" path="img/10130100001103000000.png"/>
+        <Symbol type="Rescue" sic="10131000001900000000" path="img/10131000001900000000.png"/>
+        <Symbol type="MEU_ARG" sic="10133000001100000002" path="img/10133000001100000002.png"/>
+        <Symbol type="OP" sic="10131000101212000000" path="img/10131000101212000000.png"/>
+        <Symbol type="US" path="img/USA_Flag.png"/>
+        <Symbol type="NLD" path="img/NLD_Flag.png"/>
+        <Symbol type="CAN" path="img/CAN_Flag.png"/>
+        <Symbol type="NATO" path="img/NATO_Flag.png"/>
+    </Symbols>
+    <Networks>
+        <Network name="Regt" icon="img/10131000151211950000.png" netcon="RegtHq"/>
+        <Network name="Bn" icon="img/10131000161211950000.png" netcon="BnHq"/>
+        <Network name="Co" icon="img/10131000151211950000.png" netcon="CoHq"/>
+        <Network name="Plt" icon="img/10131000141211000000.png" netcon="CoHq"/>
+        <Network name="Sqd" icon="img/10131000121211000000.png" netcon="PltHq"/>
+        <Network name="FT" icon="img/10131000121211000000.png" netcon="Sqd"/>
+    </Networks>
+</Mission>

@@ -66,6 +66,15 @@ app.put('/xml/*', function (req, res) {
         res.end();
     });
 });
+
+app.post('/entity/*'),function(req,res){
+    console.log("Post entity " + req.url);
+    console.log(req.body);
+    fs.writeFile(__dirname + '/public' + req.url, req.body, function () {
+        res.end();
+    });
+}
+
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8000
@@ -74,12 +83,12 @@ server.listen(server_port, server_ip_address, function () {
     console.log('listening on ' + server_port);
 });
 //
-var scenarioname = "Default Scenario";
-var scenariodata = [];
+var missionid = "Default Mission";
+var missiondata = [];
 var servers = [];
 var units = [];
 var allconnections = [];
-var scenarioRunning = false;
+var missionRunning = false;
 
 io.on('connection', function (socket) {
 
@@ -94,22 +103,22 @@ io.on('connection', function (socket) {
     socket.emit('connection', {message: 'Msg Socket Ready', socketid: socket.id});
 
     socket.on('server connected', function (data) {
-        console.log("server connect to socket: " + data.socketid + ", scenario:" + data.scenarioname);
+        console.log("server connect to socket: " + data.socketid + ", mission:" + data.missionid);
         servers.push({server: data.socketid});
-        if (scenarioname === "Default Scenario") {
-            scenariodata = data.scenariodata;
-            io.emit('init server', {target: "server", scenarioname: data.scenarioname, scenariodata: scenariodata});
+        if (missionid === "Default Mission") {
+            missiondata = data.missiondata;
+            io.emit('init server', {target: "server", missionid: data.missionid, missiondata: missiondata});
         } else {
-            io.emit('init server', {target: "server", scenarioname: scenarioname, scenariodata: scenariodata});
+            io.emit('init server', {target: "server", missionid: missionid, missiondata: missiondata});
         }
-        if (scenarioRunning) {
-            io.emit('start scenario');
+        if (missionRunning) {
+            io.emit('start mission');
         }
     });
     socket.on('unit connected', function (data) {
-        console.log("units connect: " + data.id + " set scenario: " + scenarioname);
+        console.log("units connect: " + data.id + " set mission: " + missionid);
         units.push({unit: data.id});
-        io.emit('unit connected', {scenarioname: scenarioname, scenariodata: scenariodata});
+        io.emit('unit connected', {missionid: missionid, missiondata: missiondata});
     });
     socket.on('send msg', function (data) {
         console.log('send msg from ' + data.message.unit + ' to ' + data.net);
@@ -139,21 +148,21 @@ io.on('connection', function (socket) {
         console.log("emit add entity: " + data._id);
         io.emit('add entity', data);
     });
-    socket.on('set scenario', function (data) {
-        console.log("set scenario: " + data.scenarioname);
-        scenarioname = data.scenarioname;
-        scenariodata = data.scenariodata;
-        io.emit('set scenario', {target: "unit", scenarioname: scenarioname, scenariodata: scenariodata});
+    socket.on('set mission', function (data) {
+        console.log("set mission: " + data.missionid);
+        missionid = data.missionid;
+        missiondata = data.missiondata;
+        io.emit('set mission', {target: "unit", missionid: missionid, missiondata: missiondata});
     });
-    socket.on('scenario running', function () {
-        scenarioRunning = true;
-        io.emit('start scenario');
+    socket.on('mission running', function () {
+        missionRunning = true;
+        io.emit('start mission');
     });
-    socket.on('scenario stopped', function () {
-        scenarioRunning = false;
-        io.emit('stop scenario');
+    socket.on('mission stopped', function () {
+        missionRunning = false;
+        io.emit('stop mission');
     });
-    socket.on('scenario time', function (data) {
+    socket.on('mission time', function (data) {
         io.emit('set time',data);
     });
 });

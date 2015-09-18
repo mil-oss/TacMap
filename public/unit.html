@@ -26,7 +26,7 @@
     <body>
         <div id="infoCol" data-ng-app="TacMapUnit">
             <div data-ng-controller="viewCtl as vwctl">
-                <div class="scenetitle">{{selscene.value}}</div>
+                <div class="missiontitle">{{selmission.value}}</div>
                 <div class="accordion__container" data-ng-controller="menuCtrl">
                     <div class="accordion__tab">
                         <div class="accordion__tab-title" data-ng-click="openTab('tab one')"
@@ -85,5 +85,7 @@
         <script src="js/lib/compression/base64-string-v1.1.0.js"></script>
         <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
         <script src="js/tacmapUnit.js"></script>
+        <script src="js/tmUnitServices.js"></script>
+        <script src="js/tmUnitControllers.js"></script>
     </body>
 </html>
