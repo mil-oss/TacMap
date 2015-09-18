@@ -2,7 +2,7 @@
 
 TacMap is a browser based track generation and communication tool which allows the designation of movement paths for simulated entities and periodic reporting of positions over time 
 
-### Live Demo: <a href="https://tacmap.moesol.com/" target="_blank">https://tacmap.moesol.com/</a>
+### Live Demo: <a href="http://tacmap-neushul.rhcloud.com/" target="_blank">http://tacmap-neushul.rhcloud.com/</a>
 
 ### Project Description
 * This is a prototype work in progress
